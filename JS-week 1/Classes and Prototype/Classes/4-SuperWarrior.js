@@ -34,3 +34,19 @@
 
 // console.log(warrior.rage); // 0
 
+
+const Hero = require('./Hero');
+
+class Warrior extends Hero {
+    // Heros.call(this)
+    constructor() {
+        super(); // call the constructor of the Shape class
+        this.rage = 0; // add a new rage property to the Warrior class
+    }
+
+}
+
+    Warrior.prototype = Object.create(Hero.prototype);
+
+
+module.exports = Warrior;
