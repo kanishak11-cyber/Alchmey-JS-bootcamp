@@ -29,3 +29,25 @@
 // });
 //  This could be a bit of a tricky re-factor. Instead of storing one function with catch and reject, we'll want to be able to hold any number of functions and callback each of them with the resolve/reject value. How do we hold multiple values? 
 
+class Pact {
+    constructor(executor) {
+        let resolve, reject;
+        this.promise = new Promise((res, rej) => {
+            resolve = res;
+            reject = rej;
+        });
+        this.resolve = resolve;
+        this.reject = reject;
+        try {
+            executor(resolve, reject);
+        } catch (e) {
+            reject(e);
+        }
+    }
+    then(onFulfilled, onRejected) {
+        return this.promise.then(onFulfilled, onRejected);
+    }
+    catch(onRejected) {
+        return this.promise.catch(onRejected);
+    }
+}

@@ -23,3 +23,25 @@
 
 //  We're going to need to set a class member variable in our then function that will store the function for later.
 
+class Pact {
+    constructor(executor) {
+        let resolve, reject;
+        this.promise = new Promise((res, rej) => {
+            resolve = res;
+            reject = rej;
+        });
+        this.resolve = resolve;
+        this.reject = reject;
+        try {
+            executor(resolve, reject);
+        } catch (e) {
+            reject(e);
+        }
+    }
+    then(onFulfilled, onRejected) {
+        return this.promise.then(onFulfilled, onRejected);
+    }
+    catch(onRejected) {
+        return this.promise.catch(onRejected);
+    }
+}
